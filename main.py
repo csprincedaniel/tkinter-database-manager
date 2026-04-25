@@ -48,7 +48,7 @@ def update_data():
     cur = conn.cursor()
 
     cur.execute("UPDATE students SET name =%s, addrss=%s, age=%s,number=%s WHERE id=%s ",(name, address, age, number, id))
-
+   
     conn.commit()
     conn.close()
 
