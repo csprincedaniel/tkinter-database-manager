@@ -61,4 +61,25 @@ def update_data():
     conn.commit()
     conn.close()
 
-update_data()
+def delet_data():
+    id = input("Enter ID of student you want to delete")
+    conn = psycopg2.connect(dbname=os.getenv("DB_NAME"), user=os.getenv("DB_USER"), password=os.getenv("DB_PASSWORD"), host=os.getenv("DB_HOST"), port=os.getenv("DB_PORT"))
+    cur = conn.cursor()
+
+    cur.execute("SELECT * FROM students WHERE id=%s", (id))
+    student = cur.fetchone()
+
+    if student:
+        print(f"Student to be deleted: ID {student[0]}, Name: {student[1]}, Address: {student[3]}, Number: {student[4]}")
+        choice = input("Are you sure you want to delete the student? (yes/no)")
+        if choice.lower() == "yes":
+            cur.execute("DELETE FROM students WHERE id=%s", (id))
+            print("Student record deleted")
+        else:
+            print("Deletion cancelled")
+    else:
+        print("Student not found")
+
+    conn.commit()
+    conn.close()
+delet_data()
