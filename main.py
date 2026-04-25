@@ -42,6 +42,15 @@ def insert_data():
 
     refresh_treeview()
 
+def delete_data():
+    selected = tree.selection()[0]
+    print(selected)
+    id = tree.item(selected)['values'][0]
+    query = "DELETE FROM students WHERE id=%s"
+    parameters=(id,)
+    run_query(query, parameters)
+    messagebox.showinfo("Information", "data deleted successfully")
+    refresh_treeview()
 root = Tk()
 root.title("Student Database Management System")
 #root.geometry("300x300")
@@ -73,7 +82,7 @@ button_frame.grid(row=1, column=0, pady=5, sticky="ew")
 Button(button_frame, text="Create Table").grid(row=0, column=0)
 Button(button_frame, text="Add Data",command=insert_data).grid(row=0, column=1)
 Button(button_frame, text="Update Data Table").grid(row=0, column=2)
-Button(button_frame, text="Delete Data").grid(row=0, column=3)
+Button(button_frame, text="Delete Data", command=delete_data).grid(row=0, column=3)
 
 tree_frame = Frame(root)
 tree_frame.grid(row=2, column=0, padx=10, sticky="nsew")
